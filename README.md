@@ -16,3 +16,7 @@ The Iris project writes this repository. A trust agent may later move lines too.
 | [`check.py`](check.py) | The list's check |
 
 To move a line, change `list.json` and its listing's copy, and run the check before you commit, as [`FORMAT.md`](FORMAT.md#run-the-check) says. A line moves only to a higher version.
+
+## Licence
+
+This repository is licensed under the [Apache License 2.0](LICENSE).
