@@ -1,0 +1,122 @@
+{
+  "id": "search",
+  "version": "1.0.0",
+  "sdk": "0.1",
+  "name": "Search",
+  "maker": "Iris",
+  "summary": "Searches the web and reads pages, through Firecrawl.",
+  "kind": "service",
+  "provides": "search",
+  "reaches": [
+    {"host": "api.firecrawl.dev", "paths": ["/v2/search", "/v2/scrape"]}
+  ],
+  "requirements": [
+    {"id": "firecrawl", "requires": "credential", "kind": "key", "needed": true, "moment": "use", "appKey": "none"}
+  ],
+  "device": [],
+  "account": [],
+  "agents": {"limit": "any", "shareKey": true},
+  "settings": [],
+  "tools": [
+    {
+      "name": "web_search",
+      "title": "Search the web",
+      "description": "Search the web for information. Returns up to 5 results unless a limit says otherwise, each with a title, a URL and a description. The query goes to the search service as written, so operators such as site:example.com, filetype:pdf, intitle:word, -term and \"exact phrase\" may work.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "The search query."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "The most results to return. 5 when left out."
+          }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string", "maxLength": 300},
+                "url": {"type": "string", "maxLength": 2000},
+                "description": {"type": "string", "maxLength": 1000}
+              },
+              "required": ["title", "url", "description"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["results"],
+        "additionalProperties": false
+      },
+      "effect": "read",
+      "idempotent": true,
+      "permission": "search.web_search",
+      "requirements": ["firecrawl"],
+      "budget": 10,
+      "community": {"role": "asks", "mode": "standing"}
+    },
+    {
+      "name": "web_extract",
+      "title": "Read web pages",
+      "description": "Read the content of up to 5 web pages, given their URLs. Returns each page as markdown text with its title. A page longer than 15,000 characters is cut there and marked as cut. A page that can't be read comes back with an error code and no content.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "urls": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 5,
+            "description": "The URLs of the pages to read.",
+            "items": {"type": "string", "minLength": 1, "maxLength": 2000}
+          }
+        },
+        "required": ["urls"],
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "pages": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {"type": "string", "maxLength": 2000},
+                "title": {"type": "string", "maxLength": 300},
+                "content": {"type": "string", "maxLength": 15000},
+                "cut": {"type": "boolean"},
+                "error": {"type": "string", "maxLength": 40}
+              },
+              "required": ["url", "title", "content", "cut", "error"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["pages"],
+        "additionalProperties": false
+      },
+      "effect": "read",
+      "idempotent": true,
+      "permission": "search.web_extract",
+      "requirements": ["firecrawl"],
+      "budget": 10,
+      "community": {"role": "asks", "mode": "standing"}
+    }
+  ],
+  "program": {"form": "python"}
+}

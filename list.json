@@ -1,0 +1,11 @@
+{
+  "format": 1,
+  "packages": [
+    {
+      "repository": "https://github.com/iris-agent-project/iris-agent-official-packages",
+      "folder": "search",
+      "commit": "2bbc6207494583e854d76e353d413dcd93a6a0b9",
+      "digest": "sha256:91c19abc6d60234444d8608ce1f1bd49377eef26d99c8b7e8ef4439aa02eeeff"
+    }
+  ]
+}
