@@ -1,17 +1,18 @@
 {
-  "id": "search",
-  "version": "1.0.1",
+  "id": "firecrawl-search",
+  "version": "1.0.2",
   "sdk": "0.1",
-  "name": "Search",
+  "name": "Firecrawl search",
   "maker": "Iris",
-  "summary": "Searches the web and reads pages, through Firecrawl.",
+  "summary": "Searches the web and reads pages through Firecrawl, with the account's own key, for heavier use.",
   "kind": "service",
   "provides": "search",
   "reaches": [
-    {"host": "api.firecrawl.dev", "paths": ["/v2/search", "/v2/scrape"]}
+    {"host": "api.firecrawl.dev", "paths": ["/v2/search", "/v2/scrape", "/v2/team/credit-usage"]}
   ],
   "requirements": [
-    {"id": "firecrawl", "requires": "credential", "kind": "key", "needed": true, "moment": "use", "appKey": "none"}
+    {"id": "firecrawl", "requires": "credential", "kind": "key", "needed": true, "moment": "use", "appKey": "none",
+     "properties": ["key"], "account": "none", "proof": {"path": "/v2/team/credit-usage"}}
   ],
   "device": [],
   "account": [],
@@ -64,7 +65,7 @@
       },
       "effect": "read",
       "idempotent": true,
-      "permission": "search.web_search",
+      "permission": "firecrawl-search.web_search",
       "requirements": ["firecrawl"],
       "budget": 10,
       "community": {"role": "asks", "mode": "standing"}
@@ -112,7 +113,7 @@
       },
       "effect": "read",
       "idempotent": true,
-      "permission": "search.web_extract",
+      "permission": "firecrawl-search.web_extract",
       "requirements": ["firecrawl"],
       "budget": 10,
       "community": {"role": "asks", "mode": "standing"}
