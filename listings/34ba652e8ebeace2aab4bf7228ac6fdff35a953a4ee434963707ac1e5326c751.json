@@ -1,6 +1,6 @@
 {
   "id": "search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sdk": "0.1",
   "name": "Search",
   "maker": "Iris",
@@ -100,9 +100,9 @@
                 "title": {"type": "string", "maxLength": 300},
                 "content": {"type": "string", "maxLength": 15000},
                 "cut": {"type": "boolean"},
-                "error": {"type": "string", "maxLength": 40}
+                "error": {"type": "string", "minLength": 1, "maxLength": 40}
               },
-              "required": ["url", "title", "content", "cut", "error"],
+              "required": ["url", "title", "content", "cut"],
               "additionalProperties": false
             }
           }

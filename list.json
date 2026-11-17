@@ -4,8 +4,8 @@
     {
       "repository": "https://github.com/iris-agent-project/iris-agent-official-packages",
       "folder": "search",
-      "commit": "2bbc6207494583e854d76e353d413dcd93a6a0b9",
-      "digest": "sha256:91c19abc6d60234444d8608ce1f1bd49377eef26d99c8b7e8ef4439aa02eeeff"
+      "commit": "ba51cf823568dd7221b2b71ed7b0ffdae936a058",
+      "digest": "sha256:34ba652e8ebeace2aab4bf7228ac6fdff35a953a4ee434963707ac1e5326c751"
     }
   ]
 }
